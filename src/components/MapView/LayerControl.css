@@ -1,0 +1,84 @@
+.layer-control {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  padding: 6px;
+  gap: 4px;
+  z-index: 100;
+}
+
+.layer-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.layer-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+}
+
+.layer-btn:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.layer-btn.active {
+  background: #667eea;
+  color: white;
+}
+
+.layer-btn.active:hover {
+  background: #5568d3;
+}
+
+.layer-divider {
+  width: 1px;
+  background: #e5e7eb;
+  margin: 6px 0;
+}
+
+/* Animação ao clicar */
+.layer-btn:active {
+  transform: scale(0.95);
+}
+
+/* Tooltip alternativo */
+.layer-btn::after {
+  content: attr(title);
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.layer-btn:hover::after {
+  opacity: 1;
+}

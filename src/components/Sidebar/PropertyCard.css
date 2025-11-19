@@ -1,0 +1,147 @@
+.property-card {
+  position: relative;
+  display: flex;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.property-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  border-color: #e5e7eb;
+}
+
+.property-card.selected {
+  border-color: #667eea;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+}
+
+/* Barra lateral colorida */
+.property-card-indicator {
+  width: 4px;
+  flex-shrink: 0;
+}
+
+/* Conteúdo */
+.property-card-content {
+  flex: 1;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Header */
+.property-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.property-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+  line-height: 1.3;
+  flex: 1;
+}
+
+.property-badge {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Proprietário */
+.property-owner {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.owner-name {
+  font-size: 13px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.owner-doc {
+  font-size: 11px;
+  color: #9ca3af;
+  font-family: 'Courier New', monospace;
+}
+
+/* Métricas */
+.property-metrics {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.metric svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+}
+
+.metric.highlight {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.metric.warning {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+/* Ícone de selecionado */
+.property-card-selected-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background: #667eea;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.property-card-selected-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Acessibilidade */
+.property-card:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.property-card:focus:not(:focus-visible) {
+  outline: none;
+}

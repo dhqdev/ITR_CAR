@@ -1,0 +1,49 @@
+.
+├── ARQUITETURA_TECNICA.md
+├── ESTRUTURA_ARVORE.txt
+├── ESTRUTURA_DADOS.md
+├── GUIA_INSTALACAO.md
+├── package.json
+├── public
+│   └── index.html
+├── README.md
+├── RESUMO_EXECUTIVO.md
+└── src
+    ├── App.css
+    ├── App.jsx
+    ├── components
+    │   ├── DetailsPanel
+    │   │   ├── ActionFooter.css
+    │   │   ├── ActionFooter.jsx
+    │   │   ├── CARTab.css
+    │   │   ├── CARTab.jsx
+    │   │   ├── DetailsPanel.css
+    │   │   ├── DetailsPanel.jsx
+    │   │   ├── ITRTab.css
+    │   │   ├── ITRTab.jsx
+    │   │   ├── ProfileHeader.css
+    │   │   └── ProfileHeader.jsx
+    │   ├── MapView
+    │   │   ├── DatePicker.css
+    │   │   ├── DatePicker.jsx
+    │   │   ├── LayerControl.css
+    │   │   ├── LayerControl.jsx
+    │   │   ├── MapView.css
+    │   │   └── MapView.jsx
+    │   └── Sidebar
+    │       ├── Header.css
+    │       ├── Header.jsx
+    │       ├── PropertyCard.css
+    │       ├── PropertyCard.jsx
+    │       ├── PropertyList.css
+    │       ├── PropertyList.jsx
+    │       ├── SearchBar.css
+    │       ├── SearchBar.jsx
+    │       ├── Sidebar.css
+    │       └── Sidebar.jsx
+    ├── data
+    │   └── mockData.js
+    ├── index.css
+    └── index.js
+
+8 directories, 39 files
