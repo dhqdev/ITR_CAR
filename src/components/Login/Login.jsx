@@ -11,36 +11,36 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Usuários mock para demonstração
-  const mockUsers = [
-    { username: 'admin', password: 'admin123', role: 'Administrador', name: 'Administrador Sistema' },
-    { username: 'auditor', password: 'auditor123', role: 'Auditor Fiscal', name: 'Maria Oliveira' },
-    { username: 'analista', password: 'analista123', role: 'Analista Ambiental', name: 'João Santos' }
-  ];
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    // Simular delay de autenticação
-    setTimeout(() => {
-      const user = mockUsers.find(
-        u => u.username === formData.username && u.password === formData.password
-      );
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password
+        })
+      });
 
-      if (user) {
-        onLogin({
-          username: user.username,
-          name: user.name,
-          role: user.role,
-          authenticated: true
-        });
+      const data = await response.json();
+
+      if (response.ok) {
+        onLogin(data);
       } else {
-        setError('Usuário ou senha inválidos');
+        setError(data.error || 'Usuário ou senha inválidos');
         setLoading(false);
       }
-    }, 1000);
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      setError('Erro ao conectar com o servidor. Verifique se o servidor está rodando.');
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {

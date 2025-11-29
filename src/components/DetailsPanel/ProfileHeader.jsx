@@ -1,5 +1,5 @@
 import React from 'react';
-import { statusConfig } from '../../data/mockData';
+import { statusConfig } from '../../config/statusConfig';
 import './ProfileHeader.css';
 
 /**
