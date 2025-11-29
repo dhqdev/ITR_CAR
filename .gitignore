@@ -20,3 +20,9 @@ yarn-error.log*
 
 # Mapbox token (se usar)
 .env
+
+# Banco de dados SQLite
+server/*.db
+server/*.db-journal
+*.db
+*.db-journal

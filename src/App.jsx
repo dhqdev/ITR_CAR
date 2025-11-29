@@ -1,9 +1,8 @@
-import React, { useState, useMemo } from 'react';
-import { mockProperties, municipios } from './data/mockData';
+import React, { useState, useMemo, useEffect } from 'react';
 import Login from './components/Login/Login';
 import UserHeader from './components/Header/UserHeader';
 import Sidebar from './components/Sidebar/Sidebar';
-import MapView from './components/MapView/MapView';
+import RealMapView from './components/MapView/RealMapView';
 import DetailsPanel from './components/DetailsPanel/DetailsPanel';
 import './App.css';
 
@@ -26,16 +25,54 @@ function App() {
 
   // Estado global da aplicação
   const [selectedMunicipio, setSelectedMunicipio] = useState('Campinas');
-  const [selectedProperty, setSelectedProperty] = useState(mockProperties[0]);
+  const [selectedProperty, setSelectedProperty] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [mapLayer, setMapLayer] = useState('vector'); // 'vector' ou 'satellite'
-  const [selectedDate, setSelectedDate] = useState('2025-01-10');
+
+  // Estado para dados da API
+  const [properties, setProperties] = useState([]);
+  const [municipios, setMunicipios] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  /**
+   * Carrega propriedades e municípios do banco de dados
+   */
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Busca todas as propriedades
+        const propertiesResponse = await fetch('http://localhost:5000/api/properties');
+        const propertiesData = await propertiesResponse.json();
+        setProperties(propertiesData);
+
+        // Busca municípios
+        const municipiosResponse = await fetch('http://localhost:5000/api/municipios');
+        const municipiosData = await municipiosResponse.json();
+        setMunicipios(municipiosData);
+
+        // Seleciona a primeira propriedade como padrão
+        if (propertiesData.length > 0) {
+          setSelectedProperty(propertiesData[0]);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        setLoading(false);
+      }
+    };
+
+    if (user) {
+      fetchData();
+    }
+  }, [user]);
 
   /**
    * Filtra propriedades por município e termo de busca
    */
   const filteredProperties = useMemo(() => {
-    let filtered = mockProperties.filter(
+    let filtered = properties.filter(
       prop => prop.municipio === selectedMunicipio
     );
 
@@ -58,7 +95,7 @@ function App() {
     return filtered.sort((a, b) => 
       priorityOrder[a.status_auditoria] - priorityOrder[b.status_auditoria]
     );
-  }, [selectedMunicipio, searchQuery]);
+  }, [properties, selectedMunicipio, searchQuery]);
 
   /**
    * Handler para seleção de propriedade
@@ -73,7 +110,7 @@ function App() {
   const handleMunicipioChange = (municipio) => {
     setSelectedMunicipio(municipio);
     // Seleciona a primeira propriedade do novo município
-    const firstProperty = mockProperties.find(p => p.municipio === municipio);
+    const firstProperty = properties.find(p => p.municipio === municipio);
     if (firstProperty) {
       setSelectedProperty(firstProperty);
     }
@@ -91,13 +128,31 @@ function App() {
    */
   const handleLogout = () => {
     setUser(null);
-    setSelectedProperty(mockProperties[0]);
+    setProperties([]);
+    setMunicipios([]);
+    setSelectedProperty(null);
     setSearchQuery('');
   };
 
   // Tela de login se não estiver autenticado
   if (!user) {
     return <Login onLogin={handleLogin} />;
+  }
+
+  // Tela de carregamento
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        fontSize: '18px',
+        color: '#666'
+      }}>
+        Carregando dados...
+      </div>
+    );
   }
 
   return (
@@ -119,12 +174,8 @@ function App() {
       />
 
       {/* COLUNA 2: Viewport Geoespacial */}
-      <MapView
+      <RealMapView
         property={selectedProperty}
-        mapLayer={mapLayer}
-        onLayerChange={setMapLayer}
-        selectedDate={selectedDate}
-        onDateChange={setSelectedDate}
       />
 
       {/* COLUNA 3: Painel de Detalhes e Ação */}
